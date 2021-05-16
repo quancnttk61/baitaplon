@@ -1,165 +1,358 @@
-#include<stdio.h>
-#include<conio.h>
-#include<stdlib.h>
 #include<windows.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
 #include<string.h>
 
-//NOTE: struct employee
-struct Employee {
-    char name[30];
-    char province[30];
-    int year;
-    char b[30];
+struct nhanvien
+{
+	char ten[255];
+	char tinh[255];
+	int nam;
+	int ma;
+	int luong;
 };
-void enter(Employee *employee);// NOTE: h�m nh?p 1 nh�n vi�n
-void print(Employee *employee); // NOTE: h�m xu?t 1 nh�n vi�n
-void enter(Employee *&employee, int &amount);// NOTE: nh?p danh s�ch nh�n vi�n
-void print(Employee *employee, int amount);// NOTE:xu?t danh s�ch nh�n vi�n
-void arrange(Employee*employee,int amount);
-void count(Employee *employee, int amount);
-void menu(Employee *employee,int amount);
-void outprintf(Employee *employee,int amount,FILE *f);
-// NOTE: main
-int main(){
-    Employee *employee;
-    int amount;
-    employee = (Employee*)malloc(amount*sizeof(Employee));
-    enter (employee,amount);
-    menu(employee,amount);
-    if(employee !=NULL){
-    free(employee);
-    }
-
-    return 0;
+void ve_tuong_tren();
+void ve_tuong_duoi();
+void ve_tuong_phai();
+void ve_tuong_duoi();
+void ve_tuong();
+void gotoXY(int x, int y);
+void SetColor(WORD color);
+void Nhap(nhanvien *a, int &n);
+void timque(nhanvien *a, int n);
+void dem(nhanvien *a, int n);
+void Xuat(nhanvien *a,int n);
+void sapxep(nhanvien *a, int n);
+void xoa_nv(nhanvien *a,int &n);
+void them_nv(nhanvien *a, int &n);
+void outprintf(nhanvien *a,int n,FILE *f);
+void tinhluong(nhanvien *a,int n);
+void phanloai(nhanvien *a,int n);
+void menu();
+int main()
+{
+	gotoXY(5,3);
+	SetColor(4);
+	printf("\t\t\t\t     ---CHUONG TRINH QUAN LY SINH VIÊN---\n\n\n");
+	menu();
 }
-void enter(Employee *employee){
-    fflush (stdin);
-    printf("Name of employee: ");
-    gets(employee->name);
-    printf("Province of employee: ");
-    gets(employee->province);
-    printf("Year of birth of employee: ");
-    scanf("%d",&employee->year);
-}
-void print(Employee *employee){
-    printf("Name of employee %s\n",employee->name);
-    printf("Province of employee %s\n",employee->province);
-    printf("Year of birth of employee %d\n",employee->year);
-}
-void enter(Employee *&employee, int &amount){
-    // NOTE: nh?p s? lu?ng
-    printf("Nhap vao so luong nhan vien:");
-    scanf("%d",&amount);
-    /// NOTE: c?p ph�t b? nh?
-    employee = (Employee*)realloc(employee,(amount)*sizeof(Employee));
-    // NOTE: nh?p v�o l?n lu?t c�c nh�n vi�n
-    for(int i = 0; i < amount;i++){
-        printf ("\nNhap thong tin nhan vien thu %d\n",i+1);
-        enter(&*(employee+i));
-    }
-}
-void print(Employee *employee, int amount){
-    for(int i = 0; i<amount;i++){
-        printf("Nhan vien thu %d\n",i+1);
-        print(employee+i);
-    }
-}
-void arrange(Employee *emoloyee, int amount){
-
-
-    Employee temp;
-    for(int i = 0; i < amount-1; i++){
-        for(int j = i+1; j < amount; j++){
-            if(strcmp((emoloyee+i)->province, (emoloyee+j)->province) < 0){
-                temp = *(emoloyee+i);
-                *(emoloyee+i) = *(emoloyee+j);
-                *(emoloyee+j) = temp;
-            }
-        }
-    }
-}
-void count(Employee *employee, int amount){
-	printf("\ntinh thanh \t so lan \n");
-	for(int i=0;i<amount;i++){
-		int k=1;
-		if(strcmp((employee+i)->b,(employee+1)->name )==0){
-		strcpy((employee)->b,(employee+2)->name);// gia tri da dc xet
-		  for(int j=1+i;j<amount;j++){
-			if(strcmp((employee+i)->province,(employee+j)->province)==0){
-				k++;
-				strcpy((employee+j)->b,(employee+2)->name);
-			}
-		}
-		printf("%s\t\t%d\n", employee->province , k);
+void Nhap(nhanvien *a, int &n)
+{
+	system("cls");
+	for(int i=0;i<n;i++)
+	{
+	  SetColor(7);
+	  fflush(stdin);
+	  printf("\n\tNhap ten nhan vien thu %d: ",i+1);
+	  gets((a+i)->ten);
+	  printf("\n\tNhap tinh: ");
+	  gets((a+i)->tinh);
+	  printf("\n\tNhap nam sinh: ");
+	  scanf("%d",&(a+i)->nam);
+	  printf("\n\tNhap ma so nhan vien:");
+	  scanf("%d",&(a+i)->ma);
 	}
-  }
+	getch();
+	system("cls");
 }
-void searchProvince(Employee *employee, int amount)
+void timque(nhanvien *a, int n)
 {
 	system("cls");
 	char s[255];
 	int k=0;
-	printf("\nnhap ten tinh thang can tim:\n");
+	SetColor(2);
+	printf("\n\tNHAP TINH CAN TIM: ");
 	fflush(stdin);
+	SetColor(7.);
 	gets(s); 
-	for(int i=0;i<amount;i++){
-		if(strcmp(s,(employee+i)->province)==0){
-			printf("sinh vien thu %d \n %s %s %d\n",i+1,(employee+i)->name,(employee+i)->province, (employee+i)->year);
+	for(int i=0;i<n;i++){
+		if(strcmp(s,(a+i)->tinh)==0){
+			SetColor(7);
+			printf("Nhan vien thu %d \n%s\t %s\t %d\t\n",i+1, (a+i)->ten,(a+i)->tinh, (a+i)->nam,(a+i)->ma);
 			k++;
 		}
 	}
 	if(k==0){
-		printf("ko tim thay\n");
+		SetColor(4);
+		printf("\t\t\t\tKHONG TIM THAY SINH VIEN\n");
 	}
-
+	getch();
+	system("cls");
 } 
-void outprintf(Employee *employee,int amount,FILE *f){
-    f= fopen ("C:\\Users\\Admin\\Desktop\\ghifile","ab");
+void dem(nhanvien *a, int n){
+	int b[250];
+	for(int i=0;i<n;i++){
+		b[i] = 1;//gia trin chua dc xet
+	}
+	SetColor(11);
+	printf("\n\t\t|TINH THANH   \t    SO LAN| \n");
+	for(int i=0;i<n;i++){
+		int k=1;
+		if(b[i]==1){
+		b[i]=0;
+		  for(int j=1+i;j<n;j++){
+			if(strcmp((a+i)->tinh,a[j].tinh)==0){
+				k++;
+				b[j] = 0;
+			}
+		}
+		SetColor(7);
+		printf("\t\t|%s\t    \t%d |\n", (a+i)->tinh , k);
+	}
+  }
+  getch();
+  system("cls");
+  
+}
+	
+
+void Xuat(nhanvien *a,int n){
+	system("cls");
+	SetColor(7);
+	printf("\n\t_________________________________THONG TIN NHAN VIEN DA NHAP VAO:_____________________________________\n\n");
+	SetColor(2);
+	printf("\t||TEN NHAN VIEN \t\t||TINH THANH\t\t||NAM SINH\t\t||Ma so");
+	for(int i=0;i<n;i++)
+	{	SetColor(7);
+		printf("\n");
+		printf("\t %s\t\t\t  %s\t\t     %d\t\t%d",(a+i)->ten,(a+i)->tinh, (a+i)->nam,(a+i)->ma);
+	}
+	SetColor(7);
+	printf("\n\t______________________________________________________________________________________________________");
+}
+void sapxep(nhanvien *a, int n){
+	for(int i=0;i<n-1;i++){
+		for(int j=i+1;j<n;j++){
+			if(strcmp((a+i)->tinh,(a+j)->tinh)<0){
+				nhanvien k = *(a+i);
+				*(a+i)=*(a+j);
+				*(a+j)= k ;
+			}
+		}
+	}
+}
+void outprintf(nhanvien *a,int n,FILE *f){
+	getchar();
+	char filename[30];
+	printf("Nhap ten file: \n");
+	gets(filename);
+    f= fopen (filename,"ab");
     if(f==NULL){
-    	printf("khong the mo file");
+    	printf("KHONG THE GHI FILE!!!");
     	exit(0);
 	}
-	fprintf(f,"ho va name nhan vien la \tque quan nhan vien la \tnam sinh cua nhan vien la \n");
-    for(int i=0; i<amount;i++){
-    	fprintf(f,"\t%s\t\t%s\t\t%d\n",(employee+i)->name,(employee+i)->province,(employee+i)->year);
+	fprintf(f,"ho va ten nhan vien la \tque quan nhan vien la \tnam sinh cua nhan vien la \the so luong cua nha vien la\tluong nhan vien la\n");
+    for(int i=0; i<n;i++){
+    	fprintf(f,"\t%s\t\t%s\t\t%d\n",(a+i)->ten,(a+i)->tinh,(a+i)->nam,(a+i)->ma);
+	} 
+    fclose(f);
+}
+void tinhluong(nhanvien *a,int n){
+	int hsl[255];
+	int lcb[255];
+	for(int i=0;i<n;i++){
+		printf("Nhap he so luong cua %s", (a+i)->ten);
+		scanf("%d",&hsl[i]);
+		printf("Nhap luong co ban cua %s", (a+i)->ten);
+		scanf("%d",&lcb[i]);
+		}
+	printf("\t||Ten nhan vien\t\t\t||Tong luong\n");
+	for(int i=0;i<n;i++){
+		printf("\t  %s\t\t\t%d\n",(a+i)->ten,hsl[i]*lcb[i]);
 	}
-     fclose(f);
+	getch();
+	}
+void xoa_nv(nhanvien *a,int &n){
+	int d;
+	printf("nhap ma so nhan vien can xoa: ");
+	scanf("%d", &d);
+	for(int i =0; i<n; i++){
+		if(d==(a+i)->ma){
+			while(i<n){
+				a[i]=a[i+1];
+				i++;
+			}
+			n--;
+		}
+	}
+}
+void them_nv(nhanvien *a, int &n){
+	int g;
+	printf("Nhap  so nhan Vien muon them : ");
+	scanf("%d",&g);
+	for( int i = 0 ; i< g ; i++){
+	nhanvien temp;
+	  fflush(stdin);
+	  printf("\n\tNhap ten nhan vien: ");
+	  gets(temp.ten);
+	  printf("\n\tNhap tinh: ");
+	  gets(temp.tinh);
+	  fflush(stdin);
+	  printf("\n\tNhap nam sinh: ");
+	  scanf("%d", &temp.nam);
+	  printf("\n\tNhap ma so nhan vien: ");
+	  scanf("%d", &temp.ma);
+	  fflush(stdin);
+	  for(int i =n;i>=0;i--)
+	  {
+	  	 a[i]=a[i-1];
+	  }
+	a[0]=temp;
+	n++;
+    }
 }
 void menu(){
 	int chon, flat=1;
-	while(flat){
-		printf("1. Nhap du lieu cua tung nhan vien.\n");
-		printf("2. Sap xep, thong k� va hien thi thong tin chi tiet cua tung nhan vien theo tinh.\n");
-		printf("3. Tim nh�n vien theo tinh.\n");
-		printf("4. Ghi vao tap tin nhi phan employee.dat.\n");
-		printf("5. Thoat.\n");
-		printf("Moi ban chon chuc nang: ");
+	while(flat==1){
+		SetColor(7);
+		printf("\t\tMoi ban chon chuc nang:\n\n");
+		SetColor(2);
+		printf("\t\t1. Nhap du lieu cua tung nhan vien.\n");
+		printf("\t\t2. Sap xep, thong kê va hien thi thong tin chi tiet cua tung nhan vien theo tinh.\n");
+		printf("\t\t3. Tim nhân vien theo tinh.\n");
+		printf("\t\t4. Ghi vao tap tin nhi phan employee.dat.\n");
+		printf("\t\t5. Tinh luong cua tung nhan vien.\n");
+		printf("\t\t6. Them, Xoa nhan vien.\n");
+		printf("\t\t7. Thoat.\n");
+		ve_tuong();
+		printf("\n\t\t\t ==>  ");
 		scanf("%d", &chon);
 		switch(chon){
 			case 1: 
-				struct Employee *employee;
-				int amount;
+			    system("cls");
+				struct nhanvien *a;
+				int n;
+				SetColor(2);
+				gotoXY(48,9);
 				printf ("Nhap so sinh vien: ");
-				scanf ("%d", &amount);
-				enter(employee, amount);
+				scanf ("%d", &n);
+				a=(nhanvien*)malloc(n*sizeof(nhanvien));
+				Nhap(a,n);
+				printf("\n\n\n");
 				break;
 			case 2:
-				printf("\nThong tin sinh vien da nhap vao la: \n");
-				arrange(employee, amount);
-				print(employee, amount);
-				count(employee,amount);
+				system("cls");
+				sapxep(a,n);
+				Xuat(a,n);
+				printf("\n\n");
+				dem(a,n);
+				printf("\n\n\n");
 				break;
 			case 3:
 				printf("tim nhan vien theo tinh >>\n");
-				searchProvince(employee,amount);
+				timque(a,n);
+				printf("\n\n\n");
 				break;
 			case 4: 
 			    FILE *f;
-				outprintf(employee,amount,f);
+				outprintf(a,n,f);
+				system("cls");
 				break;
 			case 5:
+				tinhluong(a,n);
+				system("cls");
+				getch();
+				break;
+			case 6:
+				int r;
+			printf("Chon 1 de xoa nhan vien\n");
+			printf("Chon 2 de them nhan vien\n");
+			scanf("\t%d",&r);
+			if(r==1){
+				xoa_nv(a,n);
+				sapxep(a,n);
+				Xuat(a,n);
+				getch();
+				system("cls");
+				printf("\n\n\n");
+				break;
+			}
+			else if(r==2)
+			{
+				fflush(stdin);
+				them_nv(a,n);
+				sapxep(a,n);
+	            Xuat(a,n);
+	            getch();
+				system("cls");
+				printf("\n\n\n");
+				break;
+			}
+			case 7:
 				flat=0;		
 		}
 	}	
+	
 }
+void ve_tuong_tren()
+{
+	int x = 10, y = 1;
+	while (x <= 100)
+	{
+		gotoXY(x, y);
+		printf ("*");
+		x++;
+	}
+}
+void ve_tuong_duoi()
+{
+	int x = 10, y = 18;
+	while (x <= 100)
+	{
+		gotoXY(x, y);
+		printf ("*");
+		x++;
+	}
+}
+void ve_tuong_phai()
+{
+	int x = 100, y = 1;
+	while (y <= 18)
+	{
+		gotoXY(x, y);
+		printf ("*");
+		y++;
+	}
+}
+void ve_tuong_trai()
+{
+	int x = 10, y = 1;
+	while (y <= 18)
+	{
+		gotoXY(x, y);
+		printf ("*");
+		y++;
+	}
+}
+void ve_tuong()
+{
+	SetColor(11);
+	ve_tuong_tren();
+	ve_tuong_duoi();
+	ve_tuong_phai();
+	ve_tuong_trai();
+	SetColor(7);
+}
+void gotoXY(int x, int y)
+{
+	HANDLE hConsoleOutput;
+	COORD Cursor_an_Pos = { x, y };
+	hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleCursorPosition(hConsoleOutput, Cursor_an_Pos);
+}
+void SetColor(WORD color)
+{
+	HANDLE hConsoleOutput;
+	hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 
+	CONSOLE_SCREEN_BUFFER_INFO screen_buffer_info;
+	GetConsoleScreenBufferInfo(hConsoleOutput, &screen_buffer_info);
+
+	WORD wAttributes = screen_buffer_info.wAttributes;
+	color &= 0x000f;
+	wAttributes &= 0xfff0;
+	wAttributes |= color;
+
+	SetConsoleTextAttribute(hConsoleOutput, wAttributes);
+}
