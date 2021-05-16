@@ -34,7 +34,7 @@ int main()
 {
 	gotoXY(5,3);
 	SetColor(4);
-	printf("\t\t\t\t     ---CHUONG TRINH QUAN LY SINH VIÊN---\n\n\n");
+	printf("\t\t\t\t     ---CHUONG TRINH QUAN LY NHAN VIEN---\n\n\n");
 	menu();
 }
 void Nhap(nhanvien *a, int &n)
@@ -75,7 +75,7 @@ void timque(nhanvien *a, int n)
 	}
 	if(k==0){
 		SetColor(4);
-		printf("\t\t\t\tKHONG TIM THAY SINH VIEN\n");
+		printf("\t\t\t\tKHONG TIM THAY NHAN VIEN\n");
 	}
 	getch();
 	system("cls");
@@ -116,7 +116,7 @@ void Xuat(nhanvien *a,int n){
 	for(int i=0;i<n;i++)
 	{	SetColor(7);
 		printf("\n");
-		printf("\t %s\t\t\t  %s\t\t     %d\t\t%d",(a+i)->ten,(a+i)->tinh, (a+i)->nam,(a+i)->ma);
+		printf("\t %s\t\t\t t\t%s\t\t\t    %d\t\t%d",(a+i)->ten,(a+i)->tinh, (a+i)->nam,(a+i)->ma);
 	}
 	SetColor(7);
 	printf("\n\t______________________________________________________________________________________________________");
@@ -204,12 +204,15 @@ void them_nv(nhanvien *a, int &n){
 }
 void menu(){
 	int chon, flat=1;
+		struct nhanvien *a;
+		int n;
+		a=(nhanvien*)malloc(n*sizeof(nhanvien));
 	while(flat==1){
 		SetColor(7);
 		printf("\t\tMoi ban chon chuc nang:\n\n");
 		SetColor(2);
 		printf("\t\t1. Nhap du lieu cua tung nhan vien.\n");
-		printf("\t\t2. Sap xep, thong kê va hien thi thong tin chi tiet cua tung nhan vien theo tinh.\n");
+		printf("\t\t2. Sap xep, thong ke va hien thi thong tin chi tiet cua tung nhan vien theo tinh.\n");
 		printf("\t\t3. Tim nhân vien theo tinh.\n");
 		printf("\t\t4. Ghi vao tap tin nhi phan employee.dat.\n");
 		printf("\t\t5. Tinh luong cua tung nhan vien.\n");
@@ -221,13 +224,13 @@ void menu(){
 		switch(chon){
 			case 1: 
 			    system("cls");
-				struct nhanvien *a;
-				int n;
+			
+				
 				SetColor(2);
 				gotoXY(48,9);
 				printf ("Nhap so sinh vien: ");
 				scanf ("%d", &n);
-				a=(nhanvien*)malloc(n*sizeof(nhanvien));
+				
 				Nhap(a,n);
 				printf("\n\n\n");
 				break;
@@ -283,7 +286,7 @@ void menu(){
 				flat=0;		
 		}
 	}	
-	
+	free(a);
 }
 void ve_tuong_tren()
 {
