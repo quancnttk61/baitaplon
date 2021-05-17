@@ -116,7 +116,7 @@ void Xuat(nhanvien *a,int n){
 	for(int i=0;i<n;i++)
 	{	SetColor(7);
 		printf("\n");
-		printf("\t %s\t\t\t t\t%s\t\t\t    %d\t\t%d",(a+i)->ten,(a+i)->tinh, (a+i)->nam,(a+i)->ma);
+		printf("\t %s  \t\t\t %s\t\t\t%d\t\t%d",(a+i)->ten,(a+i)->tinh, (a+i)->nam,(a+i)->ma);
 	}
 	SetColor(7);
 	printf("\n\t______________________________________________________________________________________________________");
@@ -157,7 +157,7 @@ void tinhluong(nhanvien *a,int n){
 		printf("Nhap luong co ban cua %s", (a+i)->ten);
 		scanf("%d",&lcb[i]);
 		}
-	printf("\t||Ten nhan vien\t\t\t||Tong luong\n");
+	printf("\t||Ten nhan vien\t\t\t\t||Tong luong\n");
 	for(int i=0;i<n;i++){
 		printf("\t  %s\t\t\t%d\n",(a+i)->ten,hsl[i]*lcb[i]);
 	}
