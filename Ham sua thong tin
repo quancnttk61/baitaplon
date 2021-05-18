@@ -1,0 +1,38 @@
+void sua_thong_tin(nhanvien *a, int &n){
+	int d;
+	nhanvien temp;
+	printf("\tNhap ma so nhan vien can sua: ");
+	scanf("%d", &d);
+	for(int i =0; i<n; i++){
+		if(d==(a+i)->ma){
+			printf("%s      %s      %d",(a+i)->ten,(a+i)->tinh,(a+i)->nam);
+			while(i<n){
+				a[i]=a[i+1];
+				i++;
+			}
+			n--;
+		}
+}
+	  fflush(stdin);
+	  printf("\n\tNhap lai ten nhan vien : ");
+	  gets(temp.ten);
+	  printf("\n\tNhap tinh: ");
+	  gets(temp.tinh);
+	  printf("\n\tNhap nam sinh: ");
+	  scanf("%d",&temp.nam);
+	  printf("\n\tNhap lai ma so nhan vien: ");
+	  scanf("%d", &temp.ma);
+	for(int i =n; i>0;i--)
+	  {
+	  	a[i]=a[i-1];
+	  }
+	  a[0]=temp;
+	  n++;
+	  getch();
+}
+\\ ben duoi la  CASE cua no.
+sua_thong_tin(a,n);  	
+			system("cls");
+			Xuat(a,n);
+			getch();
+			system("cls");
